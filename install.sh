@@ -108,12 +108,12 @@ while true; do
     nohup $STEAM_BIN steam://install/39140 &> /dev/null &
     read -p "Press Enter when FINAL FANTASY VII is done installing."
     killall -9 steam
-    while pgrep steam > /dev/null; do sleep 1; done
+    while pgrep steam >/dev/null; do sleep 1; done
     rm $STEAM_ROOT/steamapps/libraryfolders.vdf &>> "7thDeck.log"
     rm $STEAM_ROOT/config/libraryfolders.vdf &>> "7thDeck.log"
   else
     echo "OK!"
-    echo "Found FF7 at $FF7_LIBRARY!"
+    echo "Found FF7 at55 $FF7_LIBRARY!"
     echo
     break
   fi
@@ -138,7 +138,9 @@ $STEAM_ROOT/config/config.vdf
 echo "Sign into the Steam account that owns FF7 if prompted."
 nohup $STEAM_BIN steam://rungameid/39140 &> /dev/null &
 echo "Waiting for Steam... If nothing happens here, launch FF7 via Steam."
-while ! pgrep "FF7_Launcher" > /dev/null; do sleep 1; done
+while !
+
+ pgrep "FF7_Launcher" > /dev/null; do sleep 1; done
 killall -9 "FF7_Launcher.exe"
 echo
 
@@ -161,7 +163,8 @@ echo
 
 # Download 7th Heaven from Github
 echo "Downloading 7th Heaven..."
-download_dependency "tsunamods-codes/7th-Heaven" "*.exe" SEVENTH_INSTALLER
+wget -O 7thHeaven-v4.3.1.0_Release.exe https://github.com/tsunamods-codes/7th-Heaven/releases/download/4.3.1/7thHeaven-v4.3.1.0_Release.exe
+SEVENTH_INSTALLER="7thHeaven-v4.3.1.0_Release.exe"
 echo
 
 # Install 7th Heaven using EXE
@@ -223,7 +226,7 @@ if [ $IS_STEAMOS = true ]; then
   cp -f deps/controller_neptune_gamepad+mouse+click.vdf $STEAM_ROOT/controller_base/templates/controller_neptune_gamepad+mouse+click.vdf
   for CONTROLLERCONFIG in $STEAM_ROOT/steamapps/common/Steam\ Controller\ Configs/*/config/configset_controller_neptune.vdf ; do
     if grep -q "\"39140\"" "$CONTROLLERCONFIG"; then
-      perl -0777 -i -pe 's/"39140"\n\s+\{\n\s+"template"\s+"controller_neptune_gamepad_fps.vdf"\n\s+\}/"39140"\n\t\{\n\t\t"template"\t\t"controller_neptune_gamepad+mouse+click.vdf"\n\t\}\n\t"7th heaven"\n\t\{\n\t\t"template"\t\t"controller_neptune_gamepad+mouse+click.vdf"\n\t\}/gs' "$CONTROLLERCONFIG"
+      perl -0777 -i -pe 's/"39140"\n\s+\{\n\s+"template"\n"controller_neptune_gamepad_fps.vdf"\n\s+\}/"39140"\n\t\{\n\t\t"template"\t\t"controller_neptune_gamepad+mouse+click.vdf"\n\t\}\n\t"7th heaven"\n\t\{\n\t\t"template"\t\t"controller_neptune_gamepad+mouse+click.vdf"\n\t\}/gs' "$CONTROLLERCONFIG"
     else
       perl -0777 -i -pe 's/"controller_config"\n\{/"controller_config"\n\{\n\t"39140"\n\t\{\n\t\t"template"\t"controller_neptune_gamepad+mouse+click.vdf"\n\t\}\n\t"7th heaven"\n\t\{\n\t\t"template"\t"controller_neptune_gamepad+mouse+click.vdf"\n\t\}/' "$CONTROLLERCONFIG"
     fi
